@@ -1,24 +1,19 @@
-data "aws_ami" "ubuntu" {
-  most_recent = true
 
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-resource "aws_instance" "web" {
+resource "aws_instance" "ansible_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
+  vpc_security_group_ids = [aws_security_group.ansible_server.id]
+
+  key_name = "talent-academy-lab"
+  subnet_id = data.aws_subnet.public.id
+
 
   tags = {
     Name = "HelloWorld"
   }
+}
+
+resource "aws_eip" "ansible_server_ip" {
+  instance = aws_instance.ansible_server.id
+  vpc      = true
 }
