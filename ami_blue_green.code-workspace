@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../ec2-lab"
+		},
+		{
+			"path": "../group2-AMI_build"
+		}
+	],
+	"settings": {}
+}
